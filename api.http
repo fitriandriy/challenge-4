@@ -1,0 +1,91 @@
+// COMPONENTS
+
+###
+GET http://localhost:8000/components
+
+###
+GET http://localhost:8000/components/4
+
+###
+POST http://localhost:8000/components
+Content-Type: application/json
+
+{
+  "name": "lcd",
+  "description": "hd++"
+}
+
+###
+PUT http://localhost:8000/components/1
+Content-Type: application/json
+
+{
+  "description": "hd"
+}
+
+###
+DELETE http://localhost:8000/components/2
+
+
+
+
+
+// PRODUCTS
+
+###
+GET http://localhost:8000/products
+
+###
+GET http://localhost:8000/products/4
+
+###
+POST http://localhost:8000/products
+Content-Type: application/json
+
+{
+  "name": "keyboard",
+  "quantity": 10
+}
+
+###
+PUT http://localhost:8000/products/4
+Content-Type: application/json
+
+{
+  "quantity": 19
+}
+
+###
+DELETE http://localhost:8000/products/3
+
+
+
+
+
+// SUPPLIERS
+
+###
+GET http://localhost:8000/suppliers
+
+###
+GET http://localhost:8000/suppliers/2
+
+###
+POST http://localhost:8000/suppliers
+Content-Type: application/json
+
+{
+  "name": "This",
+  "address": "jember"
+}
+
+###
+PUT http://localhost:8000/suppliers/2
+Content-Type: application/json
+
+{
+  "address": "jember, jawa timur, 68468"
+}
+
+###
+DELETE http://localhost:8000/suppliers/2
