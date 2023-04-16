@@ -17,8 +17,16 @@ module.exports = {
   store: async (req, res, next) => {
     try {
       const { name, address } = req.body;
+      const supplier = await suppliers.findOne({where: {name}})
 
-      const supplier = await suppliers.create({
+      if (supplier) {
+        return res.status(400).json({
+          status: false,
+          message: 'data already exists.',
+        });
+      }
+
+      const data = await suppliers.create({
         name: name,
         address: address
       })
@@ -26,7 +34,7 @@ module.exports = {
       return res.status(201).json({
         status: true,
         message: 'success',
-        data: supplier
+        data
       });
     } catch (err) {
       next(err);
@@ -56,6 +64,18 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const supplier_id = req.params.id;
+      const { name } = req.body;
+
+      if (name) {
+        const supplier = await suppliers.findOne({where: {name}});
+
+        if (supplier) {
+          return res.status(400).json({
+            status: false,
+            message: `supplier ${name} already exists.`,
+          });
+        }
+      }
 
       const updated = await suppliers.update(
         req.body, {where:

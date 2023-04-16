@@ -13,7 +13,8 @@ module.exports =  {
     "password": PGPASSWORD,
     "database": PGDATABASE,
     "host": PGHOST,
-    "dialect": DIALEC
+    "dialect": DIALEC,
+    "logginh": false
   },
   "test": {
     "username": PGUSER,

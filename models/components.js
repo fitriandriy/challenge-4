@@ -4,13 +4,15 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class components extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      models.components.belongsToMany(models.suppliers, {
+        through: models.component_suppliers,
+        foreignKey: "component_id"
+      });
+      models.components.belongsToMany(models.products, {
+        through: models.component_products,
+        foreignKey: "component_id"
+      });
     }
   }
   components.init({

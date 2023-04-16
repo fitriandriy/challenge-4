@@ -1,14 +1,14 @@
-const { component_products, products, components } = require('./../models');
+const { component_suppliers, suppliers, components } = require('./../models');
 
 module.exports = {
   index: async (req, res, next) => {
     try {
-      const data = await component_products.findAll();
+      const data = await component_suppliers.findAll();
 
       return res.status(200).json({
         status: true,
         message: 'success',
-        data
+        data: data
       });
     } catch (err) {
       next(err);
@@ -16,39 +16,38 @@ module.exports = {
   },
   store: async (req, res, next) => {
     try {
-      const { product_id, component_id } = req.body;
-
-      const product = await products.findOne({where: {id: product_id}})
+      const { supplier_id, component_id } = req.body;
+      const supplier = await suppliers.findOne({where: {id: supplier_id}})
       const component = await components.findOne({where: {id: component_id}})
-      const component_product = await component_products.findOne(
+      const component_supplier = await component_suppliers.findOne(
         {where: {
-          product_id,
+          supplier_id,
           component_id,
         }})
 
-      if (!product || !component) {
+      if (!supplier || !component) {
         return res.status(404).json({
           status: false,
-          message: 'product or component not found.',
+          message: 'supplier or component not found.',
         });
       }
 
-      if (component_product) {
+      if (component_supplier) {
         return res.status(400).json({
           status: false,
           message: 'data already exists.',
         });
       }
 
-      const data = await component_products.create({
-        product_id: product_id,
+      const data = await component_suppliers.create({
+        supplier_id: supplier_id,
         component_id: component_id
       })
 
       return res.status(201).json({
         status: true,
         message: 'success',
-        data
+        data: data
       });
     } catch (err) {
       next(err);
@@ -56,8 +55,8 @@ module.exports = {
   },
   show: async (req, res, next) => {
     try {
-      const data_id = req.params.id;
-      const data = await component_products.findOne({where: {id: data_id}})
+      const supplier_id = req.params.id;
+      const data = await component_suppliers.findOne({where: {id: supplier_id}})
 
       if (!data) {
         return res.status(404).json({
@@ -69,7 +68,7 @@ module.exports = {
       return res.status(200).json({
         status: true,
         message: 'success',
-        data,
+        data: data,
       })
     } catch (err) {
       next(err);
@@ -78,30 +77,30 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const data_id = req.params.id;
-      const { product_id, component_id } = req.body;
-      const product = await products.findOne({where: {id: product_id}})
+      const { supplier_id, component_id } = req.body;
+      const supplier = await suppliers.findOne({where: {id: supplier_id}})
       const component = await components.findOne({where: {id: component_id}})
-      const component_product = await component_products.findOne(
+      const component_supplier = await component_suppliers.findOne(
         {where: {
-          product_id,
+          supplier_id,
           component_id,
         }})
 
-      if (!product || !component) {
+      if (!supplier || !component) {
         return res.status(404).json({
           status: false,
-          message: 'product or component not found.',
+          message: 'supplier or component not found.',
         });
       }
 
-      if (component_product) {
+      if (component_supplier) {
         return res.status(400).json({
           status: false,
           message: 'data already exists.',
         });
       }
 
-      const updated = await component_products.update(
+      const updated = await component_suppliers.update(
         req.body, {where:
         {id: data_id}})
       
@@ -123,15 +122,15 @@ module.exports = {
   },
   destroy: async (req, res, next) => {
     try {
-      const data_id = req.params.id;
+      const supplier_id = req.params.id;
 
-      const deleted = await component_products.destroy({where:
-      {id: data_id}})
+      const deleted = await component_suppliers.destroy({where:
+      {id: supplier_id}})
 
       if (!deleted) {
         return res.status(404).json({
           status: false,
-          message: `data with id ${data_id} is not found`,
+          message: `data with id ${supplier_id} is not found`,
           data: deleted
         })
       }

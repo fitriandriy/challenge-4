@@ -1,4 +1,4 @@
-const { products } = require('./../models');
+const { products, components, component_products } = require('./../models');
 
 module.exports = {
   index: async (req, res, next) => {
@@ -16,17 +16,41 @@ module.exports = {
   },
   store: async (req, res, next) => {
     try {
-      const { name, quantity } = req.body;
+      const { name, quantity, component_id } = req.body;
 
-      const product = await products.create({
+      const product = await products.findOne({where: {name}})
+      const component = await components.findOne({where: {id: component_id}})
+
+      if (product) {
+        return res.status(400).json({
+          status: false,
+          message: `product ${name} already exists.`,
+        });
+      }
+
+      if (!component) {
+        return res.status(404).json({
+          status: false,
+          message: `component with id ${component_id} doesn't exist`,
+        });
+      }
+
+      const data = await products.create({
         name: name,
         quantity: quantity
+      })
+
+      const product_id = await data.id;
+
+      const create_component_product = await component_products.create({
+        product_id,
+        component_id
       })
 
       return res.status(201).json({
         status: true,
         message: 'success',
-        data: product
+        data
       });
     } catch (err) {
       next(err);
@@ -56,6 +80,18 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const product_id = req.params.id;
+      const { name } = req.body;
+
+      if (name) {
+        const product = await products.findOne({where: {name}});
+
+        if (product) {
+          return res.status(400).json({
+            status: false,
+            message: `product ${name} already exists.`,
+          });
+        }
+      }
 
       const updated = await products.update(
         req.body, {where:

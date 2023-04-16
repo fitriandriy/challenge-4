@@ -1,6 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { component, product, supplier, component_product } = require('./../controllers');
+const { 
+  component,
+  product,
+  supplier,
+  component_product,
+  // component_supplier,
+ } = require('./../controllers');
+const component_supplier = require('./../controllers/component_supplier');
 
 // component
 router.get('/components', component.index);
@@ -29,5 +36,12 @@ router.post('/component_products', component_product.store);
 router.get('/component_products/:id', component_product.show);
 router.put('/component_products/:id', component_product.update);
 router.delete('/component_products/:id', component_product.destroy);
+
+// component_supplier
+router.get('/component_suppliers', component_supplier.index);
+router.post('/component_suppliers', component_supplier.store);
+router.get('/component_suppliers/:id', component_supplier.show);
+router.put('/component_suppliers/:id', component_supplier.update);
+router.delete('/component_suppliers/:id', component_supplier.destroy);
 
 module.exports = router;

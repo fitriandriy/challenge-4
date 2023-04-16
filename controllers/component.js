@@ -17,8 +17,16 @@ module.exports = {
   store: async (req, res, next) => {
     try {
       const { name, description } = req.body;
+      const component = await components.findOne({where: {name}})
 
-      const component = await components.create({
+      if (component) {
+        return res.status(400).json({
+          status: false,
+          message: 'data already exists.',
+        });
+      }
+
+      const data = await components.create({
         name: name,
         description: description
       })
@@ -26,7 +34,7 @@ module.exports = {
       return res.status(201).json({
         status: true,
         message: 'success',
-        data: component
+        data
       });
     } catch (err) {
       next(err);
@@ -56,6 +64,18 @@ module.exports = {
   update: async (req, res, next) => {
     try {
       const component_id = req.params.id;
+      const { name } = req.body;
+
+      if (name) {
+        const component = await components.findOne({where: {name: name}})
+
+        if (component) {
+          return res.status(400).json({
+            status: false,
+            message: `product ${name} already exists.`,
+          });
+        }
+      }
 
       const updated = await components.update(
         req.body, {where:
