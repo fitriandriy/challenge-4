@@ -1261,7 +1261,7 @@ paths:
             schema:
               type: object
               properties:
-                product_id:
+                supplier_id:
                   type: integer
                   example: 1
                 component_id:
