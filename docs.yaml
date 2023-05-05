@@ -7,7 +7,7 @@ info:
     email: 202410102062@mail.unej.id
   version: 1.0.0
 servers:
-  - url: http://localhost:3000
+  - url: http://localhost:8000
     description: Test di dalam local computer
 tags:
   - name: Products
