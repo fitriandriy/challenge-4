@@ -11,7 +11,7 @@ POST http://localhost:8000/components
 Content-Type: application/json
 
 {
-  "name": "lcd",
+  "name": "lcd light",
   "description": "20 inch"
 }
 
@@ -44,13 +44,13 @@ POST http://localhost:8000/products
 Content-Type: application/json
 
 {
-  "name": "Lenovo 123+",
+  "name": "Lenovo A 123+",
   "quantity": 10,
   "component_id": 3
 }
 
 ###
-PUT http://localhost:8000/products/3
+PUT http://localhost:8000/products/4
 Content-Type: application/json
 
 {
@@ -77,7 +77,7 @@ POST http://localhost:8000/suppliers
 Content-Type: application/json
 
 {
-  "name": "DreamZen Company",
+  "name": "Dream Company",
   "address": "Jember"
 }
 
@@ -129,7 +129,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:8000/component_products/5
+DELETE http://localhost:8000/component_products/2
 
 
 
